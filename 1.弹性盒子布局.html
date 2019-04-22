@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>弹性盒子</title>
+</head>
+<style>
+  html, body {
+    height: 100%;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+  }
+  .container {
+    display: flex;
+    height: 100%;
+  }
+  .left, .right {
+    height: 100%;
+    display: flex;
+    box-sizing: border-box;
+    padding: 10px;
+  }
+  .left {
+    flex: 0 0 240px;
+    border-right: 1px solid #ccc;
+    flex-direction: column;
+  }
+  .right {
+    flex: auto;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-content: space-around;
+  }
+  .left-top {
+    height: 50px;
+    border: 1px solid #ccc;
+  }
+  .left-bottom {
+    flex-grow: 1;
+    margin-top: 10px;
+    border: 1px solid #cccccc;
+  }
+  .item {
+    width: 150px;
+    height: 150px;
+    background-color: #ff0000;
+  }
+</style>
+<body>
+<div class="container">
+  <div class="left">
+    <div class="left-top"></div>
+    <div class="left-bottom"></div>
+  </div>
+  <div class="right">
+    <div class="item"></div>
+    <div class="item"></div>
+    <div class="item"></div>
+    <div class="item"></div>
+    <div class="item"></div>
+    <div class="item"></div>
+    <div class="item"></div>
+    <div class="item"></div>
+  </div>
+</div>
+</body>
+</html>
