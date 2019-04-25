@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>数组</title>
+</head>
+<body>
+
+</body>
+<script>
+  let arr1 = [
+    {value: 0, flag: true},
+    {value: 1, flag: true},
+    {value: 2, flag: false},
+    {value: 3, flag: true},
+    {value: 4, flag: true},
+  ]
+  let arr2 = []
+  arr1.every(({ value, flag }) => {
+    arr2.push(value)
+    return flag
+  })
+  console.log(arr2);    //0, 1, 2
+  
+  let arr3 = [
+    {id: 'e34as56', data: {name: 'a123', type: 'action'}},
+    {id: '434ysr6', data: {name: 'a124', type: 'action'}},
+    {id: '624yirh', data: {name: 'a125', type: 'data'}}
+  ]
+  let arr4 = arr3.map(({ id, data: { name } }) => ({ id, name }))
+  console.log(arr4)   // [{id: 'e34as56', name: 'a123'}, ...]
+
+  let arr5 = {}
+  arr3.forEach(({ id, data: { name, type } }) => {
+    if (type !== 'action') { return }
+    arr5[id] = name
+  })
+  console.log(arr5)   // {e34as56: 'a123', 434ysr6: 'a124'}
+
+  let arr6 = arr3.reduce((obj, { id, data: { name, type } }) => {
+    return type === 'action' ? Object.assign(obj, {[id]: name}) : obj
+  }, {})
+  console.log(arr6)    // {e34as56: 'a123', 434ysr6: 'a124'}
+</script>
+</html>
