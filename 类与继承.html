@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>类与继承</title>
+</head>
+<body>
+
+</body>
+<script>
+  class MyString extends String {
+    constructor(val) {
+      super(val)
+    }
+
+    reverse() {
+      return this.split('').reverse().join('')
+    }
+
+    match(rex) {
+      return rex.test(this)
+    }
+  }
+
+  let myStr = new MyString('abcde')
+  console.log(myStr);
+  console.log(myStr.reverse(), myStr.match(/bc/))
+</script>
+</html>
