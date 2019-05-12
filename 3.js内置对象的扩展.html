@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>js内置对象的扩展</title>
+</head>
+<body>
+
+</body>
+<script>
+  Date.prototype.format = function () {
+    let mon = this.getMonth() + 1
+    let d = this.getDate()
+    let h = this.getHours()
+    let min = this.getMinutes()
+    let s = this.getSeconds()
+    return `${this.getFullYear()}-${mon < 10 ? '0' + mon : mon}-${d < 10 ? '0' + d : d}`
+      + ` ${h < 10 ? '0' + h : h}:${min < 10 ? '0' + min : min}:${s < 10 ? '0' + s : s}`
+  }
+
+  console.log(new Date().format());
+
+  class MyString extends String {
+    constructor(value) {
+      super(value)
+    }
+
+    reverse() {
+      return this.split('').reverse().join('')
+    }
+
+    match(rex) {
+      return rex.test(this)
+    }
+  }
+
+  let myStr = new MyString('abcde')
+  console.log(myStr);
+  console.log(myStr.reverse(), myStr.match(/bc/), myStr.split(''))
+
+  class MyArr extends Array {
+
+    constructor(value) {
+      super(value)
+    }
+
+    reverseToStr() {
+      return this.reverse().join('')
+    }
+
+  }
+
+  let myArr = new MyArr([1, 2, 3, 4, 5])
+  console.log(myArr.reverseToStr());
+
+  class MyDate extends Date {
+    constructor(value) {
+      super(value)
+    }
+
+    format() {
+      let mon = this.getMonth() + 1
+      let d = this.getDate()
+      let h = this.getHours()
+      let min = this.getMinutes()
+      let s = this.getSeconds()
+      return `${this.getFullYear()}-${mon < 10 ? '0' + mon : mon}-${d < 10 ? '0' + d : d}`
+        + ` ${h < 10 ? '0' + h : h}:${min < 10 ? '0' + min : min}:${s < 10 ? '0' + s : s}`
+    }
+  }
+
+  let oDate = new MyDate('2018/5/27 7:20:8')
+  console.log(oDate.format(), oDate.getFullYear());
+</script>
+</html>
