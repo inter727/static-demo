@@ -49,31 +49,70 @@
     stroke-linejoin: round;
     fill: none;
   }
+  .house {
+    position: absolute;
+    width: 200px;
+    height: 200px;
+    top: 20px;
+    left: 20px;
+  }
   </style>
 </head>
 <body>
 
 <div class="grid">
   <svg width="750" height="500">
-    <!--左对齐-->
-    <!--<line x1="3" y1="3" x2="48" y2="3"></line>-->
-    <!--<line x1="3" y1="18" x2="58" y2="18"></line>-->
-    <!--<line x1="3" y1="33" x2="48" y2="33"></line>-->
-    <!--<line x1="3" y1="48" x2="58" y2="48"></line>-->
+    <defs>
+      <g id="leftAlign">
+        <!--左对齐-->
+        <line x1="3" y1="3" x2="48" y2="3"></line>
+        <line x1="3" y1="18" x2="58" y2="18"></line>
+        <line x1="3" y1="33" x2="48" y2="33"></line>
+        <line x1="3" y1="48" x2="58" y2="48"></line>
+      </g>
 
-    <!--插入-->
-    <!--<polyline points="3 3, 58 24, 3 48"></polyline>-->
+      <g id="insert">
+        <!--插入-->
+        <polyline points="3 3, 58 24, 3 48"></polyline>
+      </g>
 
-    <!--浏览器-->
-    <!--<rect x="3" y="3" width="75" height="55"></rect>-->
-    <!--<line x1="3" y1="23" x2="78" y2="23"></line>-->
-    <!--<line x1="23" y1="3" x2="23" y2="23"></line>-->
+      <g id="browser">
+        <!--浏览器-->
+        <rect x="3" y="3" width="75" height="55"></rect>
+        <line x1="3" y1="23" x2="78" y2="23"></line>
+        <line x1="23" y1="3" x2="23" y2="23"></line>
+      </g>
 
-    <!--警示-->
-    <circle cx="33" cy="33" r="30"></circle>
-    <line x1="33" y1="13" x2="33" y2="43"></line>
-    <circle cx="33" cy="53" r="3" fill="#000" stroke-width="0"></circle>
+      <symbol id="alert" viewBox="0 0 66 66">
+        <!--警示-->
+        <circle cx="33" cy="33" r="30"></circle>
+        <line x1="33" y1="13" x2="33" y2="43"></line>
+        <circle cx="33" cy="53" r="3" fill="#000" stroke-width="0"></circle>
+      </symbol>
+
+      <symbol id="play" viewBox="0 0 66 66">
+        <!--播放-->
+        <ellipse cx="33" cy="33" rx="30" ry="30"></ellipse>
+        <polygon points="26 21, 47 33, 26 45"></polygon>
+      </symbol>
+
+      <symbol id="download" viewBox="0 0 60 60">
+        <!--下载-->
+        <path d="M 22 3 L 40 3 L 40 30 L 58 30 L 30 58 L 3 30 L 22 30 Z"></path>
+      </symbol>
+    </defs>
+
+    <use xlink:href="#leftAlign" x="100" y="100"></use>
+    <use xlink:href="#insert" x="300" y="100"></use>
+    <use xlink:href="#browser" x="500" y="100"></use>
+    <use xlink:href="#alert" x="100" y="200" width="100" height="100"></use>
+    <use xlink:href="#play" x="300" y="200" width="100" height="100"></use>
+    <use xlink:href="#download" x="500" y="200" width="100" height="100"></use>
   </svg>
+</div>
+
+<div class="house">
+  <img src="./static/svg/house.svg" alt="house" style="width: 40px; height: 32px">
 </div>
 
 </body>
