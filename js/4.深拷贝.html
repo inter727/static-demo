@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>深拷贝</title>
+</head>
+<body>
+
+</body>
+<script>
+  function isObject(obj) {
+    return (typeof obj === 'object' || typeof obj === 'function') && obj !== null
+  }
+
+  function deepCopy(obj) {
+    if (!isObject(obj)) { return obj }
+    return Reflect.ownKeys(obj).reduce((prev, key) => {
+      prev[key] = isObject(obj[key]) ? deepCopy(obj[key]) : obj[key]
+      return prev
+    }, Array.isArray(obj) ? [] : {})
+  }
+
+  let obj = {a: [1,2,3], b: 1111}
+  let newObj = deepCopy(obj)
+  newObj.a[1] = 0
+  console.log(obj, newObj)
+</script>
+</html>
