@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>闭包</title>
+</head>
+<body>
+
+</body>
+<script>
+  for (let i = 1; i < 6; i++) {
+    setTimeout(function () {
+      console.log(i);
+    }, i * 1000)
+  }
+
+  for (var i = 1; i < 6; i++) {
+    (function (i) {
+      setTimeout(function () {
+        console.log(i);
+      }, i * 1000)
+    })(i)
+  }
+
+  for (var i = 1; i < 6; i++) {
+    setTimeout(function (i) {
+      console.log(i);
+    }, i * 1000, i)
+  }
+</script>
+</html>
