@@ -19,9 +19,17 @@
     Person.call(this, name, age)
     this.alias = alias
   }
-  Child.prototype = new Person()
+  // Child.prototype = new Person()
+
+  Child.prototype = Object.create(Person.prototype, {
+    constructor: {
+      value: Child,
+      configurable: true,
+      writable: true
+    }
+  })
 
   const child = new Child('张诗远', 1, '小樱桃')
-  console.log(child.say());
+  console.log(child.say(), child.age, child.alias);
 </script>
 </html>
