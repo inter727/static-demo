@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>继承</title>
+</head>
+<body>
+
+</body>
+<script>
+  function Person(name, age) {
+    this.name = name
+    this.age = age
+  }
+  Person.prototype.say = function () {
+    return this.name
+  }
+  function Child(name, age, alias) {
+    Person.call(this, name, age)
+    this.alias = alias
+  }
+  Child.prototype = new Person()
+
+  const child = new Child('张诗远', 1, '小樱桃')
+  console.log(child.say());
+</script>
+</html>
