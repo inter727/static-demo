@@ -31,5 +31,27 @@
 
   const child = new Child('张诗远', 1, '小樱桃')
   console.log(child.say(), child.age, child.alias);
+
+  function instanceOf(left, right) {
+    if (typeof left !== 'object' || left === null) { return false }
+
+    left = Object.getPrototypeOf(left)
+    if (!left) { return false }
+    if (left.constructor === right) { return true }
+    return instanceOf(left, right)
+  }
+
+  function instanceOf2(left, right) {
+    if (typeof left !== 'object' || left === null) { return false }
+
+    left = Object.getPrototypeOf(left)
+    while (left) {
+      if (left.constructor === right) { return true }
+      left = Object.getPrototypeOf(left)
+    }
+    return false
+  }
+
+  console.log(instanceOf2(child, String));
 </script>
 </html>
