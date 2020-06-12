@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>数组扁平化</title>
+</head>
+<body>
+
+</body>
+<script>
+  // reduce迭代
+  function flatArray(arr) {
+    if (!Array.isArray(arr)) { return arr }
+    return arr.reduce((prev, item) => {
+      return prev.concat(Array.isArray(item) ? flatArray(item) : item)
+    }, [])
+  }
+
+  console.log(flatArray([1, 2, [3, 4, 5,[6, 7, 8]]]));
+
+  // 扩展运算符
+  function flatArray2(arr) {
+    if (!Array.isArray(arr)) { return arr }
+    while (arr.some(item => Array.isArray(item))) {
+      arr = [].concat(...arr)
+    }
+    return arr
+  }
+
+  console.log(flatArray2([1, 2, [3, 4, 5,[6, 7, 8]]]));
+
+  // flat方法
+  console.log([1, 2, [3, 4, 5, [6, 7, 8]]].flat(Infinity));
+</script>
+</html>
