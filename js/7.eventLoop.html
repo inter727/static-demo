@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>eventLoop</title>
+</head>
+<body>
+
+</body>
+<script>
+  async function async1() {
+    console.log("async1 start");
+    await async2();
+    await async3();
+    console.log("async1 end");
+  }
+
+  async function async2() {
+    console.log("async2");
+  }
+
+  async function async3() {
+    console.log("async3");
+  }
+
+  console.log("script start");
+
+  window.setTimeout(function () {
+    console.log("setTimeout");
+  });
+
+  new Promise(function (resolve) {
+    console.log("promise1");
+    resolve();
+  }).then(function () {
+    console.log("then11");
+    new Promise((resolve,reject)=>{
+      console.log("promise2")
+      resolve()
+    }).then(()=>{
+      console.log("then21")
+    }).then(()=>{
+      console.log("then23")
+    })
+  }).then(() => {
+    console.log("then12");
+  });
+
+  async1()
+
+  new Promise((resolve,reject)=>{
+    console.log("promise3")
+    resolve()
+  }).then(()=>{
+    console.log("then31")
+    return new Promise((resolve,reject)=>{
+      console.log("promise4")
+      resolve()
+    }).then(()=>{
+      console.log("then41")
+    }).then(()=>{
+      console.log("then42")
+    })
+  }).then(() => {
+    console.log("then32")
+  })
+
+  console.log('script end');
+</script>
+</html>
