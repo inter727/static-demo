@@ -48,6 +48,10 @@
 
   async1()
 
+  window.requestAnimationFrame(() => {
+    console.log("requestAnimationFrame");
+  })
+
   new Promise((resolve,reject)=>{
     console.log("promise3")
     resolve()
