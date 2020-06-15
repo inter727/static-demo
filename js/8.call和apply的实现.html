@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>call和apply的实现</title>
+</head>
+<body>
+
+</body>
+<script>
+  Function.prototype.myCall = function (context, ...args) {
+    context = context || window
+    context.fn = this
+    const result = context.fn(...args)
+    delete context.fn
+    return result
+  }
+
+  Function.prototype.myApply = function (context, args = []) {
+    context = context || window
+    context.fn = this
+    const result = context.fn(...args)
+    delete context.fn
+    return result
+  }
+
+  var value = 1
+  const foo = {
+    value: 2
+  }
+  function bar(a, b) {
+    return this.value + a + b
+  }
+
+  console.log(bar(1, 2));
+  console.log(bar.myCall(foo, 1, 2));
+  console.log(bar.myApply(foo, [1, 2]));
+</script>
+</html>
