@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>bind的实现</title>
+</head>
+<body>
+
+</body>
+<script>
+  Function.prototype.myBind = function (context, ...args) {
+    const that = this
+    return function () {
+      return that.apply(context, [...args].concat(...arguments))
+    }
+  }
+
+
+  var val = 1
+
+  const obj = {
+    val: 2
+  }
+
+  function foo(a, b) {
+    return this.val + a - b
+  }
+
+  const bar = foo.myBind(obj, 3)
+  console.log(bar(2));
+</script>
+</html>
