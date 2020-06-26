@@ -9,10 +9,17 @@
 </body>
 <script>
   Function.prototype.myBind = function (context, ...args) {
+    if (typeof this !== 'function') {
+      throw new Error('Function.prototype.myBind - what is trying to be bound is not callable')
+    }
     const that = this
-    return function () {
+    const result = function () {
+      // 构造函数的this只指向实例本身
+      context = this instanceof that ? this : context
       return that.apply(context, [...args].concat(...arguments))
     }
+    result.prototype = Object.create(that.prototype)
+    return result
   }
 
 
@@ -26,7 +33,13 @@
     return this.val + a - b
   }
 
-  const bar = foo.myBind(obj, 3)
-  console.log(bar(2));
+  foo.prototype = {
+    val: 3
+  }
+
+  const bar = foo.myBind(obj, 2)
+  console.log(foo(2, 3));
+  console.log(bar(3));
+  console.log((new bar(2)).val);
 </script>
 </html>
