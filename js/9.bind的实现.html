@@ -12,14 +12,11 @@
     if (typeof this !== 'function') {
       throw new Error('Function.prototype.myBind - what is trying to be bound is not callable')
     }
-    const that = this
-    const result = function () {
-      // 构造函数的this只指向实例本身
-      context = this instanceof that ? this : context
-      return that.apply(context, [...args].concat(...arguments))
+    const self = this
+    return function F() {
+      const params = [...args].concat(...arguments)
+      return this instanceof F ? new self(params) : self.apply(context, params)
     }
-    result.prototype = Object.create(that.prototype)
-    return result
   }
 
 
