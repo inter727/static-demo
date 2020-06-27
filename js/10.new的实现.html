@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>new的实现</title>
+</head>
+<body>
+
+</body>
+<script>
+  function createObject(constructor, ...args) {
+    const obj = {}
+    obj.__proto__ = constructor.prototype
+    const result = constructor.call(obj, ...args)
+    return result instanceof Object ? result : obj
+  }
+
+  function Person(name) {
+    this.name = name
+    return null
+  }
+
+  const p = createObject(Person, 'zhang')
+  console.log(p.name);
+</script>
+</html>
