@@ -11,18 +11,25 @@ class MyPromise {
     this.rejectedCallbacks = []
     const self = this
     const resolve = value => {
-      if (self.state === PENDING) {
-        self.state = RESOLVED
-        self.value = value
-        self.resolvedCallbacks.map(cb => cb(self.value))
+      if (value instanceof MyPromise) {
+        return value.then(resolve, reject)
       }
+      setTimeout(() => {
+        if (self.state === PENDING) {
+          self.state = RESOLVED
+          self.value = value
+          self.resolvedCallbacks.map(cb => cb(self.value))
+        }
+      }, 0)
     }
     const reject = value => {
-      if (self.state === PENDING) {
-        self.state = REJECTED
-        self.value = value
-        self.rejectedCallbacks.map(cb => cb(self.value))
-      }
+      setTimeout(() => {
+        if (self.state === PENDING) {
+          self.state = REJECTED
+          self.value = value
+          self.rejectedCallbacks.map(cb => cb(self.value))
+        }
+      }, 0)
     }
     try {
       fn(resolve, reject)
@@ -34,15 +41,46 @@ class MyPromise {
   then(onFulfilled, onRejected) {
     onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : v => v
     onRejected = typeof onRejected === 'function' ? onRejected : r => { throw r }
+    const self = this
     if (this.state === PENDING) {
-      this.resolvedCallbacks.push(onFulfilled)
-      this.rejectedCallbacks.push(onRejected)
+      return new MyPromise((resolve, reject) => {
+        self.resolvedCallbacks.push(() => {
+          try {
+            resolve(onFulfilled(self.value))
+          } catch (e) {
+            reject(e)
+          }
+        })
+        self.rejectedCallbacks.push(() => {
+          try {
+            reject(onRejected(self.value))
+          } catch (e) {
+            reject(e)
+          }
+        })
+      })
     }
     if (this.state === RESOLVED) {
-      onFulfilled(this.value)
+      return new MyPromise((resolve, reject) => {
+        setTimeout(() => {
+          try {
+            resolve(onFulfilled(self.value))
+          } catch (reason) {
+            reject(reason)
+          }
+        })
+      })
     }
     if (this.state === REJECTED) {
-      onRejected(this.value)
+      return new MyPromise((resolve, reject) => {
+        setTimeout(() => {
+          try {
+            reject(onRejected(self.value))
+          } catch (reason) {
+            reject(reason)
+          }
+        })
+      })
     }
   }
 

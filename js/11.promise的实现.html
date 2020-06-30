@@ -14,8 +14,11 @@
     // reject(2)
   }).then(res => {
     console.log(res);
+    return 4
   }, err => {
     console.log(err);
+  }).then(res => {
+    console.log(res);
   })
   new MyPromise((resolve, reject) => {
     setTimeout(() => {
@@ -24,8 +27,13 @@
     // reject(4)
   }).then(res => {
     console.log(res);
+    throw (5)
   }, err => {
     console.log(err);
+  }).then(res => {
+
+  }, err => {
+    console.error(err)
   })
 </script>
 </html>
