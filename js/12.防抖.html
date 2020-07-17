@@ -20,8 +20,21 @@
 </body>
 <script>
   let num = 0
-  document.getElementById('container').addEventListener('mousemove', function() {
+  const handle = function () {
     this.innerText = (num++).toString()
-  })
+  }
+  document.getElementById('container').addEventListener('mousemove', debounce(handle, 1000))
+  function debounce(fn, wait, ...args) {
+    let time
+    return function() {
+      let self = this
+      if (time) {
+        window.clearTimeout(time)
+      }
+      time = window.setTimeout(() => {
+        fn.apply(self, args)
+      }, wait)
+    }
+  }
 </script>
 </html>
