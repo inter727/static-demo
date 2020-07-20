@@ -17,16 +17,23 @@
 </style>
 <body>
   <div id="container"></div>
+  <p>要求：</p>
+  <p>1、this指向正确</p>
+  <p>2、能访问event对象</p>
+  <p>3、能够立即执行</p>
+  <p>4、能够有返回值</p>
+  <p>5、能够取消防抖</p>
 </body>
 <script>
   let num = 0
-  const handle = function () {
+  const handle = function (e) {
+    console.log(e);
     this.innerText = (num++).toString()
   }
   document.getElementById('container').addEventListener('mousemove', debounce(handle, 1000))
-  function debounce(fn, wait, ...args) {
+  function debounce(fn, wait) {
     let time
-    return function() {
+    return function(...args) {
       let self = this
       if (time) {
         window.clearTimeout(time)
