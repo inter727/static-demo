@@ -30,15 +30,15 @@
     this.innerText = (++num).toString()
   }
 
-  const mousemoveHandle = throttle(handle, 3000, { leading: true, trailing: true })
+  const mousemoveHandle = throttle(handle, 3000, { leading: true })
   document.getElementById('container').addEventListener('mousemove', mousemoveHandle)
   document.getElementById('btn').addEventListener('click', mousemoveHandle.cancel)
 
   function throttle (fn, wait, { leading = false, trailing = true }) {
-    let time, prev = 0
+    let time, prev = leading ? 0 : Date.now()
     const throttled = function (...args) {
       const self = this
-      if (!prev && leading) {
+      if (!prev) {
         fn.apply(self, args)
         prev = Date.now()
       }
@@ -52,13 +52,14 @@
       } else {
         fn.apply(self, args)
         prev = Date.now()
+        window.clearTimeout(time)
         time = null
       }
     }
     throttled.cancel = function () {
       window.clearTimeout(time)
       time = null
-      prev = 0
+      prev = leading ? 0 : Date.now()
     }
     return throttled
   }
