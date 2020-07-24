@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>节流</title>
+</head>
+<style>
+  #container {
+    width: 100%;
+    height: 200px;
+    line-height: 200px;
+    text-align: center;
+    color: #fff;
+    background-color: #444;
+    font-size: 30px;
+  }
+</style>
+<body>
+  <div id="container"></div>
+  <button id="btn" style="margin-top: 20px">取消节流</button>
+  <p>1、this指向正确</p>
+  <p>2、能访问event对象</p>
+  <p>3、能控制立即执行和停止触发再执行一次</p>
+  <p>4、能够取消节流</p>
+</body>
+<script>
+  let num = 0
+  const handle = function (e) {
+    console.log(e);
+    this.innerText = (++num).toString()
+  }
+
+  const mousemoveHandle = throttle(handle, 3000, { leading: true, trailing: true })
+  document.getElementById('container').addEventListener('mousemove', mousemoveHandle)
+  document.getElementById('btn').addEventListener('click', mousemoveHandle.cancel)
+
+  function throttle (fn, wait, { leading = false, trailing = true }) {
+    let time, prev = 0
+    const throttled = function (...args) {
+      const self = this
+      if (!prev && leading) {
+        fn.apply(self, args)
+        prev = Date.now()
+      }
+      if (Date.now() - prev < wait) {
+        if (!trailing || time) { return }
+        time = window.setTimeout(() => {
+          fn.apply(self, args)
+          prev = Date.now()
+          time = null
+        }, wait)
+      } else {
+        fn.apply(self, args)
+        prev = Date.now()
+        time = null
+      }
+    }
+    throttled.cancel = function () {
+      window.clearTimeout(time)
+      time = null
+      prev = 0
+    }
+    return throttled
+  }
+</script>
+</html>

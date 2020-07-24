@@ -31,9 +31,9 @@
     console.log(e);
     this.innerText = (++num).toString()
   }
-  const mounsemoveHandle = debounce(handle, 1000, true)
-  document.getElementById('container').addEventListener('mousemove', mounsemoveHandle)
-  document.getElementById('btn').addEventListener('click', mounsemoveHandle.cancel)
+  const mousemoveHandle = debounce(handle, 1000, true)
+  document.getElementById('container').addEventListener('mousemove', mousemoveHandle)
+  document.getElementById('btn').addEventListener('click', mousemoveHandle.cancel)
 
   function debounce(fn, wait, immediate = false) {
     let time
