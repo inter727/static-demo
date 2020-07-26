@@ -16,7 +16,27 @@
 
   let it = foo(5)
   console.log(it.next());
-  console.log(it.return(12));
+  console.log(it.next(12));
   console.log(it.next(13));
+  
+  function *gen() {
+    yield 1
+    return 2
+    yield 3
+  }
+
+  function *bar(fn) {
+    yield 4
+    const g = yield *fn()
+    console.log(g);
+    yield 5
+  }
+
+  const b = bar(gen)
+  console.log(b.next());
+  console.log(b.next());
+  console.log(b.next());
+  console.log(b.next());
+  console.log(b.next());
 </script>
 </html>
