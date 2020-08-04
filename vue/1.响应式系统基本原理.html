@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>响应式系统基本原理</title>
+</head>
+<body>
+
+</body>
+<script>
+  function defineReactive(obj, key, value) {
+    Object.defineProperty(obj, key, {
+      enumerable: true,
+      configurable: true,
+      get: function () {
+        return value
+      },
+      set: function (newVal) {
+        if (newVal === value) { return }
+        console.log('视图更新啦！')
+      }
+    })
+  }
+
+  function observe(data) {
+    Object.entries(data).forEach(([key, value]) => {
+      defineReactive(data, key, value)
+    })
+  }
+
+  class Vue {
+    constructor(option) {
+      this.$data = option.data
+      observe(this.$data)
+    }
+  }
+
+  const vm = new Vue({
+    data: {
+      a: 1,
+      b: 'aa'
+    }
+  })
+
+  vm.$data.a = 2
+  console.log(vm.$data.b);
+</script>
+</html>
