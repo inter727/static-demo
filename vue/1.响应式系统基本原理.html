@@ -7,34 +7,8 @@
 <body>
 
 </body>
+<script src="vue.js"></script>
 <script>
-  function defineReactive(obj, key, value) {
-    Object.defineProperty(obj, key, {
-      enumerable: true,
-      configurable: true,
-      get: function () {
-        return value
-      },
-      set: function (newVal) {
-        if (newVal === value) { return }
-        console.log('视图更新啦！')
-      }
-    })
-  }
-
-  function observe(data) {
-    Object.entries(data).forEach(([key, value]) => {
-      defineReactive(data, key, value)
-    })
-  }
-
-  class Vue {
-    constructor(option) {
-      this.$data = option.data
-      observe(this.$data)
-    }
-  }
-
   const vm = new Vue({
     data: {
       a: 1,
