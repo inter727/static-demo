@@ -26,7 +26,7 @@
         if (p < 0) {
           p = target.length + p % target.length
         }
-        return Reflect.set(target, p, value, receiver)
+        Reflect.set(target, p, value, receiver)
       }
     })
   }

@@ -1,33 +1,30 @@
 class Vue {
   constructor(option) {
     this.$data = option.data
-    observe(this.$data)
+    this.$data = observe(this.$data)
     new Watcher()
     // 模拟render过程
     console.log('~render', this.$data.a)
   }
 }
 
-function defineReactive(obj, key, value) {
+function defineReactive(obj) {
   const dep = new Dep()
-  Object.defineProperty(obj, key, {
-    enumerable: true,
-    configurable: true,
-    get: function () {
+  return new Proxy(obj, {
+    get(obj, p, receiver) {
       dep.addSub(Dep.target)
-      return value
+      return Reflect.get(obj, p, receiver)
     },
-    set: function (newVal) {
-      if (newVal === value) { return }
+    set(target, p, value, receiver) {
+      if (value === obj[p]) { return }
       dep.notify()
+      Reflect.set(target, p, value, receiver)
     }
   })
 }
 
 function observe(data) {
-  Object.entries(data).forEach(([key, value]) => {
-    defineReactive(data, key, value)
-  })
+  return defineReactive(data)
 }
 
 class Dep {
